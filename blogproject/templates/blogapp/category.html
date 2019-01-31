@@ -1,0 +1,83 @@
+{% extends 'blogview/base.html' %}
+{% block body %}
+{% load static %}
+
+      <!-- END header -->
+
+
+    <section class="site-section pt-5">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-md-6">
+
+            <h2 class="mb-4">Category:{{ keyword|capfirst }}</h2>
+          </div>
+        </div>
+        <div class="row blog-entries">
+          <div class="col-md-12 col-lg-8 main-content">
+            <div class="row mb-5 mt-5">
+
+              <div class="col-md-12">
+
+
+                <!-- END post -->
+                {% if keyword == '' %}
+                {% else %}
+                {% for category in category_filter_context %}
+
+                <div class="post-entry-horzontal">
+                  <a href="{% url 'blog-post' pk=category.pk %}">
+                    <div class="image element-animate" data-animate-effect="fadeIn" style="background-image: url({{ category.post_image.url }});"></div>
+                    <span class="text">
+                      <div class="post-meta">
+                        <span class="author mr-2"><img src="{{ category.author.author_image.url }}" alt="Colorlib">{{ category.author }}</span>&bullet;
+                        <span class="mr-2">{{ category.post_date }}</span> &bullet;
+                        <span class="mr-2">{{ category.post_category }}</span> &bullet;
+
+                      </div>
+                      <h2>T{{ category.post_message_first_para|truncatewords_html:20 }}</h2>
+                    </span>
+                  </a>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <!-- END post -->
+
+
+            <!-- END sidebar-box -->
+            <div class="sidebar-box">
+              <div class="bio text-center">
+
+              </div>
+              </div>
+            </div>
+            <!-- END sidebar-box -->
+
+
+            <div class="sidebar-box">
+              <h3 class="heading">Categories</h3>
+              {% for post_cate in post_context %}
+              <ul class="categories">
+                <li><a href="#">{{ post_cate.post_category|capfirst }}</a></li>
+              </ul>
+              {% endfor %}
+            </div>
+            <!-- END sidebar-box -->
+
+            <div class="sidebar-box">
+              <h3 class="heading">Tags</h3>
+              {% for post in post_context %}
+              <ul class="tags">
+                <li><a href="#">{{ post.post_tages }}</a></li>
+              </ul>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- END sidebar -->
+
+        </div>
+      </div>
+    </section>
+
+{% endblock %}

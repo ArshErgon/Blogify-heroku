@@ -1,0 +1,143 @@
+{% extends 'blogview/base.html' %}
+{% block body %}
+{% load static %}
+      <!-- END header -->
+
+      <section class="site-section pt-5 pb-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+
+              <div class="owl-carousel owl-theme home-slider">
+                {% for eye_catcher in eye_catcher_post %}
+                <div>
+                  <a href="{% url 'blog-post-eye' pk=eye_catcher.pk %}" class="a-block d-flex align-items-center height-lg" style="background-image: url('{{ eye_catcher.post_image.url }}'); ">
+                    <div class="text half-to-full">
+                      <span class="category mb-5">{{ eye_catcher.post_category }}</span>
+                      <div class="post-meta">
+
+                        <span class="author mr-2"><img src="{{ eye_catcher.author.author_image.url }}" alt="Colorlib"> {{ eye_catcher.author.author_name }}</span>&bullet;
+                        <span class="mr-2">{{ eye_catcher.post_date }}</span> &bullet;
+                      </div>
+                      <h3>{{ eye_catcher.post_title|title }}</h3>
+                      <p>{{ eye_catcher.post_message_first_para|truncatewords:30|capfirst }}</p>
+                    </div>
+                  </a>
+                </div>
+                {% endfor %}
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+
+      </section>
+      <!-- END section -->
+
+      <section class="site-section py-sm">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <h2 class="mb-4">Latest Posts</h2>
+            </div>
+          </div>
+          <div class="row blog-entries">
+            <div class="col-md-12 col-lg-8 main-content">
+              <div class="row">{% for post in post_context %}
+                <div class="col-md-6">
+                  <a href="{% url 'blog-post' pk=post.pk %}" class="blog-entry element-animate" data-animate-effect="fadeIn">
+                    <img src="{{ post.post_image.url }}" alt="Image placeholder">
+                    <div class="blog-content-body">
+                      <div class="post-meta">
+                        <span class="author mr-2"><img src="{{ post.author.author_image.url }}" alt="Colorlib"> {{ post.author.author_name }}</span>&bullet;
+                        <span class="mr-2">{{ post.post_date }}</span> &bullet;
+                        <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
+                      </div>
+                      <h2>{{ post.post_message_first_para|truncatewords:30  }}</h2>
+                    </div>
+                  </a>
+                </div>
+                {% endfor %}
+              </div>
+
+            </div>
+
+            <!-- END main-content -->
+              <div class="col-md-12 col-lg-4 sidebar">
+              <div class="sidebar-box search-form-wrap">
+                <form action="{% url 'category' %}" class="search-form" method="post">{% csrf_token %}
+                  <div class="form-group">
+                    <span class="icon fa fa-search"></span>
+                    <input type="text" class="form-control" id="s" placeholder="Type a keyword and hit enter" name='keyword-search'>
+                  </div>
+                </form>
+              </div>
+
+              <!-- END sidebar-box -->
+              <div class="sidebar-box">
+                <div class="bio text-center">{% for owner in owner_context %}
+                  <img src="{{ owner.owner_image.url }}" alt="Image Placeholder" class="img-fluid">
+                  <div class="bio-body">
+                    <h2>{{ owner.owner_name }}</h2>
+                    <p>{{ owner.owner_message }}</p>
+                    <p><a href="{{ owner.see_my_portfolio }}" class="btn btn-primary btn-sm rounded">See my portfolio</a></p>
+                    <p class="social">
+                      <a href="{{ owner.owner_twitter }}" class="p-2"><span class="fa fa-facebook"></span></a>
+                      <a href="{{ owner.owner_facebook }}" class="p-2"><span class="fa fa-twitter"></span></a>
+                      <a href="{{ owner.owner_youtube }}" class="p-2"><span class="fa fa-youtube-play"></span></a>
+                      <a href="{{ owner.owner_linkedin }}" class="p-2"><span class="fa fa-linkedin"></span></a>
+                    </p>
+                  </div>
+                </div>{% endfor %}
+              </div>
+              <!-- END sidebar-box -->
+              <div class="sidebar-box">
+                <h3 class="heading">Popular Posts</h3>
+                <div class="post-entry-sidebar">
+                  <ul>
+                    {% for popular in popular_post_context %}
+                    <li>
+                      <a href="{% url 'blog-post' pk=popular.pk %}">
+                        <img src="{{ popular.posts.post_image.url }}" alt="Image placeholder" class="mr-4">
+                        <div class="text">
+                          <h4>{{ popular.posts.post_title }}</h4>
+                          <div class="post-meta">
+                            <span class="mr-2">{{ popular.posts.post_date }} </span>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                  {% endfor %}
+                </div>
+              </div>
+              <!-- END sidebar-box -->
+
+              <div class="sidebar-box">
+                <h3 class="heading">Categories</h3>
+                <ul class="categories">
+                  {% for post_cate in post_context %}
+                  <li><a href="{% url 'category' %}">{{ post_cate.post_category }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <!-- END sidebar-box -->
+
+              <div class="sidebar-box">
+                <h3 class="heading">Tags</h3>
+                <ul class="tags">
+                  {% for post_tage in post_context %}
+                  <li><a href="{% url 'category' %}">{{ post_tage.post_tages }}</a></li>
+                {% endfor %}
+                </ul>
+              </div>
+            </div>
+            <!-- END sidebar -->
+
+          </div>
+        </div>
+      </section>
+
+{% endblock %}

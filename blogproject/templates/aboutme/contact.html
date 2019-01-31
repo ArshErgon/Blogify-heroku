@@ -1,0 +1,96 @@
+{% extends 'blogview/base.html' %}
+{% block body %}
+{% load static %}
+
+      <!-- END header -->
+
+<!--  form are start form here -->
+    <section class="site-section">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <h1>Contact Me</h1>
+          </div>
+        </div>
+        <div class="row blog-entries">
+          <div class="col-md-12 col-lg-8 main-content">
+
+            <form action="{% url 'contact' %}" method="POST" role="form"> {% csrf_token %}
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div class="form-group">
+                            <input type="text" name="your_name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                            <div class="validation"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                          <div class="form-group">
+                            <input type="email" class="form-control" name="your_email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                            <div class="validation"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group">
+                              <input type="text" class="form-control" name="your_subject" id="subject" placeholder="Subject" />
+                              <div class="validation"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                          <div class="form-group">
+                            <textarea class="form-control" name="your_message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                            <div class="validation"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </div>
+                      </div>
+                    </form>
+<br>
+
+          </div>
+
+          <!-- END main-content -->
+
+          <div class="col-md-12 col-lg-4 sidebar">
+            <div class="sidebar-box search-form-wrap">
+              <form action="{% url 'category' %}" class="search-form" name="keyword-search" method="POST">
+                <div class="form-group">
+                  <span class="icon fa fa-search"></span>
+                  <input type="text" class="form-control" id="s" placeholder="Type a keyword and hit enter">
+                </div>
+              </form>
+            </div>
+            <!-- END sidebar-box -->
+            <div class="sidebar-box">
+              <div class="bio text-center">
+                </div>
+              </div>
+            </div>
+            <!-- End -->
+            <div class="sidebar-box">
+              <h3 class="heading">Categories</h3>
+              <ul class="categories">
+                {% for post_cate in post_context %}
+                <li><a href="{% url 'category' %}">{{ post_cate.post_category }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+            <!-- END sidebar-box -->
+
+            <div class="sidebar-box">
+              <h3 class="heading">Tags</h3>
+              <ul class="tags">
+                {% for post_tage in post_context %}
+                <li><a href="{% url 'category' %}">{{ post_tage.post_tages }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <!-- END sidebar -->
+
+        </div>
+      </div>
+    </section>
+
+{% endblock %}

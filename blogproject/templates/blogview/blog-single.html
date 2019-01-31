@@ -1,0 +1,166 @@
+{% extends 'blogview/base.html' %}
+{% block body %}
+{% load static %}
+      <!-- END header -->
+
+    <section class="site-section py-lg">
+      <div class="container">
+
+        <div class="row blog-entries element-animate">
+
+          <div class="col-md-12 col-lg-8 main-content">
+            <img src="{{ blog_view.post_image.url }}" alt="Image" class="img-fluid mb-5">
+             <div class="post-meta">
+                        <span class="author mr-2"><img src="{% static 'blogappstatic/images/person_1.jpg' %}" alt="Colorlib" class="mr-2"> {{ blog_view.author }}</span>&bullet;
+                        <span class="mr-2">{{ blog_view.post_date }}</span> &bullet;
+                      </div>
+            <h1 class="mb-4">{{ blog_view.post_title|capfirst }}</h1>
+            <a class="category mb-5" href="#">{{ blog_view.post_tages }}</a>
+
+            <div class="post-content-body">
+              <p>{{ blog_view.post_message_first_para }}</p>
+            <div class="row mb-5">
+              <div class="col-md-12 mb-4">
+                <img src="{{ blog_view.post_image_optional.url }}" alt="Image placeholder" class="img-fluid">
+              </div>
+              <p>{{ blog_view.post_message_second_para }}</p>
+              <div class="col-md-6 mb-4">
+                <img src="{{ blog_view.post_image_optional1.url }}" alt="Image placeholder" class="img-fluid">
+              </div>
+            </div>
+
+
+            <p>{{ blog_view.post_message_third_para }}</p>
+            </div>
+
+
+            <div class="pt-5">
+              <p>Categories:  <a href="#">{{ blog_view.post_category }}</a></a>  Tags: <a href="#">{{ blog_view.post_tages }}</a></p>
+            </div>
+
+
+            <div class="pt-5">
+              <h3 class="mb-5">{{ comment_len.comment_length }} Comments</h3>
+              {% for comment in show_comments %}
+              <ul class="comment-list">
+                <li class="comment">
+                  <div class="comment-body">
+                    <h3>{{ comment.person_name }}</h3>
+                    <div class="meta">{{ comment.comment_date }}</div>
+                    <p>{{ comment.person_message }}</p>
+                  </div>
+                </li>
+                {% endfor %}
+
+              <!-- END comment-list -->
+
+              <div class="comment-form-wrap pt-5">
+                <h3 class="mb-5">Leave a comment</h3>
+                {% csrf_token %}
+                     <form action="" method="POST" role="form"> {% csrf_token %}
+                     <div class="row">
+                       <div class="col-md-12 mb-3">
+                         <div class="form-group">
+                           <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                           <div class="validation"></div>
+                         </div>
+                       </div>
+                       <div class="col-md-12 mb-3">
+                         <div class="form-group">
+                           <textarea class="form-control" name="comment" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                           <div class="validation"></div>
+                         </div>
+                       </div>
+                       <div class="col-md-12">
+                           <button type="submit" class="btn btn-primary">Send Message</button>
+                       </div>
+                     </div>
+                   </form><br>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- END main-content -->
+
+          <div class="col-md-12 col-lg-4 sidebar">
+            <div class="sidebar-box search-form-wrap">
+              <form action="{% url 'category' %}" class="search-form", method="post">{% csrf_token %}
+                <div class="form-group">
+                  <span class="icon fa fa-search"></span>
+                  <input type="text" class="form-control" id="s" placeholder="Type a keyword and hit enter", name="keyword-search">
+                </div>
+              </form>
+            </div>
+            <!-- END sidebar-box -->
+            <div class="sidebar-box">
+              <div class="bio text-center">
+
+                <img src="{{ blog_view.author.author_image.url }}" alt="Image Placeholder" class="img-fluid">
+                <div class="bio-body">
+                  <h2>{{ blog_view.author.author_name }}</h2>
+                  <p>{{ blog_view.author.author_bio }}</p>
+                  <p><a href="{{ blog_view.author_portfolio }}" class="btn btn-primary btn-sm rounded">See my Portfolio</a></p>
+                  <p class="social">
+                    <a href="{{ blog_view.author_facebook }}" class="p-2" blank=True><span class="fa fa-facebook"></span></a>
+                    <a href="{{ blog_view.author_twitter }}" class="p-2" blank=True><span class="fa fa-twitter"></span></a>
+                    <a href="{{ blog_view.author_instagram }}" class="p-2" blank=True><span class="fa fa-instagram"></span></a>
+                    <a href="{{ blog_view.author_youtube }}" class="p-2" blank=True><span class="fa fa-youtube-play"></span></a>
+                    <a href="{{ blog_view.author_linkedine }}" class="p-2" blank=True><span class="fa fa-linkedin"></span></a>
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- END sidebar-box -->
+
+            <div class="sidebar-box">
+              <h3 class="heading">Categories</h3>
+              <ul class="categories">
+                <li><a href="{% url 'category' %}">{{ blog_view.post_category }}</a></li>
+              </ul>
+            </div>
+            <!-- END sidebar-box -->
+
+              <div class="sidebar-box">
+                <h3 class="heading">Tags</h3>
+                <ul class="tags">
+                  <li><a href="{% url 'category' %}">{{ blog_view.post_tages }}</a></li>
+                </ul>
+              </div>
+            </div>
+          <!-- END sidebar -->
+
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="mb-3 ">Related Post</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+            {% for related_post in related_context %}
+            <a href="{% url 'blog-post' pk=related_post.pk %}" class="a-block sm d-flex align-items-center height-md" style="background-image: url('{{ related_post.post_image.url }}'); ">
+              <div class="text">
+                <div class="post-meta">
+                  <span class="category">{{ related_post.post_category }}</span>
+                  <span class="mr-2">{{ related_post.post_date }}</span> &bullet;
+                </div>
+                <h3>{{ related_post.post_title }}</h3>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+
+    </section>
+    <!-- END section -->
+    {% endblock %}

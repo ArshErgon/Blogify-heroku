@@ -1,0 +1,4 @@
+{% for x in form %}
+{{ x.posts.post_title }}
+<img src="{{ x.posts.post_image.url }}" alt="" width="30%">
+{% endfor %}
