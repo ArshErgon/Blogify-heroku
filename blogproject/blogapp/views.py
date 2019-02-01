@@ -5,6 +5,8 @@ from .models import Post, Owner, OwnerAbout, Contact, Comment, Eye_Catcher_Post,
 from django.contrib.auth import get_user_model
 from .forms import SignInForm
 
+#  change secret key
+#  change sqlite data base and media files in settings
 
 def index(request):
 	post_context = Post.objects.all()
@@ -12,10 +14,7 @@ def index(request):
 	latest_post = Post.objects.all().order_by('post_date')
 	eye_catcher_post = Eye_Catcher_Post.objects.all()
 	popular_post_context = Popular_Post.objects.all()
-	print(popular_post_context)
-	# print(eye_catcher_post)
-	# print(len(owner_context))
-	print(len(Post.objects.filter(post_category='programming'.upper())))
+	# print(len(Post.objects.filter(post_category='programming'.upper())))
 	return render(request, 'blogapp/index.html', {
 							'post_context'			:		post_context,
 							'owner_context'			:	    owner_context,
@@ -38,13 +37,13 @@ def blog_post_view(request, pk):
 	keyword = blog_view.post_tages
 	if keyword.upper() == 'django'.upper():
 		related_context = Post.objects.filter(post_tages=keyword.upper())
-		print(related_context, 'context data')
-		print(keyword, 'actual data')
+		# print(related_context, 'context data')
+		# print(keyword, 'actual data')
 	# 	print(related_context)
 	elif keyword.upper() == 'python'.upper():
 		related_context = Post.objects.filter(post_tages=keyword.upper())
-		print(related_context, 'context data')
-		print(keyword, 'actual data')
+		# print(related_context, 'context data')
+		# print(keyword, 'actual data')
 	elif keyword.upper() == 'web-development'.upper():
 		related_context = Post.objects.filter(post_tages=keyword.upper())
 	else:
@@ -82,12 +81,21 @@ def blog_post_view(request, pk):
 
 
 def blog_about_page(request):
+	owner_name = Owner.objects.filter(owner_name="Arsh Ergon")
+	# print(dir(owner_name))
+	print(owner_name)
 	owner_about_context = OwnerAbout.objects.all()
 	latest_post = Post.objects.all().order_by('post_date')
-	owner_post_context = Post.objects.filter(author=request.user.id)
+	owner_post_context = Post.objects.filter(author=1) # I dont know what to do here I will find out later by doing some sort of experiments and some google
 	owner_context = Owner.objects.all()
 	post_context = Post.objects.all()
-	popular_post_context = Popular_Post.objects.all()
+	# print(dir(owner_context))
+
+	if request.user.is_authenticated:
+		popular_post_context = Popular_Post.objects.all()
+	else:
+		popular_post_context = Popular_Post.objects.all()
+	print(popular_post_context)
 	# print(len(owner_about_context))
 	# print(owner_post_context)
 	return render(request, 'aboutme/about.html', {
@@ -100,6 +108,8 @@ def blog_about_page(request):
 							 }
 			 	    )
 
+
+#  compilcated code here
 
 def category_view(request):
 	print(request.POST.get('keyword-search'))
@@ -201,19 +211,25 @@ def signin_page(request): # sign in method
 		}
 		new_user = User.objects.create_user(username, user_email, password)
 		print(new_user)
-		return redirect('/admin')
-
-	# print(dir(form))
+		return redirect("/")
 
 
 	return render(request, 'registration/sign.html', {
-								'form':form
+								'form'		:		form
 							}
 						)
+
+def check_user(request):
+	return render(request, 'registration/check_user.html')
 
 def login_page(request):
 	return render(request, 'registration/login.html')
 
+
+
+def error_404_view(request, exception):
+	data = {'name': 'blogify.herokuapp.com'}
+	return render(request, 'error_404/error_404.html', data)
 
 def try_page(request):
 	form = Popular_Post.objects.all()
@@ -224,9 +240,8 @@ def try_page(request):
 	print(x.posts.post_tages)
 	# print(form.posts)
 
-	post = 'get_object_or_404(Eye_Catcher_Post, pk=pk)'
-	return render(request, 'blogapp/try.html', {
-							'post':post,
-							'form':form,
+
+	return render(request, 'error_404/error_404.html', {
+
 							}
 				)

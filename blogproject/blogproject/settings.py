@@ -25,7 +25,7 @@ SECRET_KEY = 'gd^lc41clv&h(-ru-pmr0tiip@51r&d0v%yy47(tbt6a$4kz%w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -129,11 +129,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'blogproject/mediafiles', 'mediacdn')
 
 # LOGIN BUILT IN method
-
-LOGIN_REDIRECT_URL = '/'
-LOGIOUT_REDIRECT_URL = '/'
-
-# LOGIN IN form
-
-LOGIN_REDIRECT_URL = '/'
-LOGIOUT_REDIRECT_URL = '/'
+# my_project/settings.py
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index'

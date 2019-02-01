@@ -95,7 +95,7 @@
                 <ul>
 
                   <li>
-                    {% for popular_post in popular_post_context %}
+                  {% for popular_post in popular_post_context %}
                     <a href="{% url 'blog-post' pk=popular_post.pk %}">
                       <img src="{{ popular_post.posts.post_image.url }}" alt="Image placeholder" class="mr-4">
                       <div class="text">
@@ -108,6 +108,7 @@
                   </li>
                   {% endfor %}
                 </ul>
+
               </div>
             </div>
             <!-- END sidebar-box -->
@@ -116,7 +117,7 @@
               <h3 class="heading">Categories</h3>
                   {% for post_cate in post_context %}
               <ul class="categories">
-                <li><a href="#">{{ post_cate.post_category }}<span>(12)</span></a></li>
+                <li><a href="{% url 'blog-post' pk=post_cate.pk %}">{{ post_cate.post_category }}<span>(12)</span></a></li>
               </ul>
               {% endfor %}
             </div>
@@ -126,7 +127,7 @@
               <h3 class="heading">Tags</h3>
               <ul class="tags">
                 {% for post_tage in post_context %}
-                <li><a href="#">{{ post_tage.post_tages }}</a></li>
+                <li><a href="{% url 'blog-post' pk=post_tage.pk %}">{{ post_tage.post_tages }}</a></li>
                 {% endfor %}
               </ul>
             </div>
