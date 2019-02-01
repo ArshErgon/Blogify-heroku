@@ -117,7 +117,7 @@
               <h3 class="heading">Categories</h3>
                   {% for post_cate in post_context %}
               <ul class="categories">
-                <li><a href="{% url 'blog-post' pk=post_cate.pk %}">{{ post_cate.post_category }}<span>(12)</span></a></li>
+                <li><a href="{% url 'blog-post' pk=post_cate.pk %}">{{ post_cate.post_category }}</a></li>
               </ul>
               {% endfor %}
             </div>

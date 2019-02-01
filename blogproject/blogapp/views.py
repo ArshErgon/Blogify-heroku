@@ -16,11 +16,11 @@ def index(request):
 	popular_post_context = Popular_Post.objects.all()
 	# print(len(Post.objects.filter(post_category='programming'.upper())))
 	return render(request, 'blogapp/index.html', {
-							'post_context'			:		post_context,
-							'owner_context'			:	    owner_context,
-							'latest_post'			:	    latest_post,
-							'eye_catcher_post'		:		eye_catcher_post,
-							'popular_post_context'	:		popular_post_context,
+							'post_context'				:			post_context,
+							'owner_context'				:		    owner_context,
+							'latest_post'				:		    latest_post,
+							'eye_catcher_post'			:			eye_catcher_post,
+							'popular_post_context'		:			popular_post_context,
 							}
 					)
 
