@@ -26,7 +26,7 @@ SECRET_KEY = 'gd^lc41clv&h(-ru-pmr0tiip@51r&d0v%yy47(tbt6a$4kz%w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['blogifyi.herokuapp.com', '.herokuapp.com']
+ALLOWED_HOSTS = ['blogifyi.herokuapp.com']
 
 
 # Application definition
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # stackOver's method
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
