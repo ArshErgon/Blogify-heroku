@@ -219,8 +219,6 @@ def signin_page(request): # sign in method
 							}
 						)
 
-def check_user(request):
-	return render(request, 'registration/check_user.html')
 
 def login_page(request):
 	return render(request, 'registration/login.html')
