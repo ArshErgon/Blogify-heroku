@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,7 @@ SECRET_KEY = 'gd^lc41clv&h(-ru-pmr0tiip@51r&d0v%yy47(tbt6a$4kz%w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['blogifyi.herokuapp.com', '.herokuapp.com']
 
 
 # Application definition
@@ -134,3 +135,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'blogproject/mediafiles', 'mediacdn')
 # my_project/settings.py
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
+
+django_heroku.settings(locals())
